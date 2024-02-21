@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  if currentUser 
+    p You are logged in as #{currentUser.username}
+    p Your membership: #{currentUser.membership}
+  p 
+    a(href="/log-in") Log In
+  p 
+    a(href="/sign-up") Sign Up
+  p 
+    a(href="messageboard") Message Board
+  
+  if currentUser 
+    p 
+      a(href="/secret") ???
+    p 
+      a(href="/log-out") Log Out

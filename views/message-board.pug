@@ -1,0 +1,48 @@
+extends layout
+
+block content
+    if currentUser.membership === "member" || currentUser.membership === "admin"
+        h1 Welcome #{currentUser.username}
+        p 
+            a(href="/") Home
+        h2 All Messages
+        p 
+            a(href="/messageboard/create") Add a Message
+        ul 
+            for message in messages 
+                .msgCard
+                    .msgCardHeader
+                        br
+                        strong #{message.author.username}
+                        br
+                        strong #{message.title}
+                        div #{message.date_formatted}
+                    div #{message.message}
+                    if currentUser.membership === "admin"
+                        form(method="POST")
+                            input(type="hidden", name="messageId", value=message._id)
+                            button(type="submit") Delete
+                        br
+                    else 
+                        if currentUser.username === message.author.username
+                            form(method="POST")
+                                input(type="hidden", name="messageId", value=message._id)
+                                button(type="submit") Delete
+    else 
+        br
+        h1 Welcome Guest
+        p 
+            a(href="/") Home
+        h2 All Messages
+        p 
+            a(href="/messageboard/create") Add a Message
+        ul 
+            for message in messages 
+                .msgCard
+                    .msgCardHeader
+                        strong User
+                        br
+                        strong #{message.title}
+                        div #{message.date_formatted}
+                    div #{message.message}
+                    br
